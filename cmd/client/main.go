@@ -15,8 +15,8 @@ func main() {
 func NewRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "passwd-cli",
-		Short: "account management client",
-		Long:  `account management client`,
+		Short: "A service-based password management tool.",
+		Long:  `A service-based password management tool.`,
 	}
 	// 添加子命令
 	childCommands := []*cobra.Command{
