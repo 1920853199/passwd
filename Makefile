@@ -23,3 +23,8 @@ install:
 	@go build -o bin/$(OS_ARCH)/passwd-server cmd/server/main.go
 	@mv bin/$(OS_ARCH)/* $(GO_BIN)
 
+## clean: Clean build files.
+clean:
+	rm -rf bin/darwin
+	rm -rf bin/linux
+	rm -rf bin/windows
