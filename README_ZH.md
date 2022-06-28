@@ -4,15 +4,16 @@
 
 ## Passwd
 
-A service-based password management tool.
+一个基于服务的密码管理工具，他的数据存在于你的服务端，你的任何客户端可以通过Token来获取你保存的信息。
 
-### Usage
+### 安装使用
 
-`make install` install the server and client for your pc.
+可以直接通过 `make install` 安装客户端以及服务端（需要有 Golang 环境）
 
-#### server
+#### 启动服务
 
-`passwd-server` running the server:
+直接执行 `./passwd-server`:
+
 
 ``` bash
 badger 2022/06/24 09:56:42 INFO: All 0 tables opened in 0s
@@ -33,25 +34,19 @@ badger 2022/06/24 09:56:42 INFO: Set nextTxnTs to 7
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ```
-You must write down the token information for the client to use.
+你必须保存好 `Token` 以提供给客户端使用 
 
-#### You can specify the open port and the directory where the data is saved and your IP address.
+服务端的启动参数有三个：
+1. `path` 数据保存的位置，默认是用户目录下的 `.passwd` 文件夹
+2. `ip` 访问IP范围，默认 `0.0.0.0`
+3. `port` 服务的端口，默认 `22622` 
 
-```
-flag.StringVar(&path, "path", util.GetConfigPath(), "Directory storing data.")
-flag.StringVar(&host, "host", "0.0.0.0", "The ip on which to serve")
-flag.IntVar(&port, "port", 22622, "The port on which to serve")
-```
+#### 客户端
 
-#### client
+启动客户端之前，必须修改客户端的配置文件。文件默认读取 `~/.passwd/comfig.json`
 
-```passwd-cli``` running the client:
+如：
 
-Before starting the client, you must modify the configuration file of the client.
-
-```~/.passwd/comfig.json```
-
-Example：
 ```
 {
     "Addr":"http://127.0.0.1:22622",
@@ -60,8 +55,17 @@ Example：
 }
 ```
 
+您需要把`Addr`修改成你服务端的地址以及端口，`Token`为上面服务启动时候获取到的。
+
+你可以看到： 
+
+```
+./passwd-cli
+```
+
 ```bash
-account management client
+
+A service-based password management tool.
 
 Usage:
   passwd-cli [command]
@@ -81,7 +85,7 @@ Flags:
 Use "passwd-cli [command] --help" for more information about a command.
 ```
 
-#### Example
+#### 例子
 
 <img src="./static/all.png" width=800>
 
