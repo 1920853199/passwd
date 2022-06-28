@@ -7,6 +7,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gogo/protobuf v1.3.2
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/modood/table v0.0.0-20220527013332-8d47e76dad33
 	github.com/spf13/cobra v0.0.5
 	github.com/tinylib/msgp v1.1.6
 	github.com/vmihailenco/msgpack/v5 v5.3.5
@@ -28,6 +29,7 @@ require (
 	github.com/klauspost/compress v1.12.3 // indirect
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect

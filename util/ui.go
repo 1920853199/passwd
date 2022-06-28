@@ -4,7 +4,21 @@ import (
 	"fmt"
 )
 
-const versionString string = `
+type STable struct {
+	Key      string
+	Username string
+	Password string
+	Ip       string
+	Remark   string
+}
+
+type SSLTable struct {
+	Key      string
+	SSH      string
+	Password string
+}
+
+const versionString string = `%s%s
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 |        ____                               __                                                                                                          |
 |       / __ \____ ____________      ______/ /                                                                                                          |
@@ -14,65 +28,59 @@ const versionString string = `
 |                                                                                                                                                       |
 |    %-147s|
 |                                                                                                                                                       |
-|    Token: %-140s|
+|    Token: %s%-140s%s%s|
 |                                                                                                                                                       |
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 `
 
 func Println(args []string) {
-	fmt.Println(fmt.Sprintf(versionString, args[0], args[1]))
+	fmt.Println(fmt.Sprintf(versionString, "\x1b[35m", "\x1b[1m", args[0], "\x1b[32m", args[1], "\x1b[35m", "\x1b[1m"))
 }
-
-const tableHead string = `
----------------------------------------------------------------------------------------------------------------------------------------------
-|     KEY       |          Username            |           Password           |              Ip              |            Remark            |
----------------------------------------------------------------------------------------------------------------------------------------------`
-
-const tableLine string = `
-| %-14s| %-29s| %-29s| %-29s| %-25s|`
-
-const tableFooter string = `
----------------------------------------------------------------------------------------------------------------------------------------------`
 
 func PrintlnData(v interface{}, key string) {
 
-	str := fmt.Sprintf(tableHead)
-
+	dataTable := make([]STable, 0)
 	// key 不为空为GET结果
 	if key != "" {
 		var item = v.(map[string]interface{})
-		str += fmt.Sprintf(tableLine, key, item["username"], item["password"], item["ip"], item["remark"])
-		str += tableFooter
+		dataTable = append(dataTable, STable{
+			key,
+			item["username"].(string),
+			item["password"].(string),
+			item["ip"].(string),
+			item["remark"].(string),
+		})
+
 	} else {
 		var item = v.([]interface{})
-
 		for _, val := range item {
 			tmpVal := val.(map[string]interface{})
 			key := tmpVal["key"]
 			it := tmpVal["value"].(map[string]interface{})
-			str += fmt.Sprintf(tableLine, key, it["username"], it["password"], it["ip"], it["remark"])
-			str += tableFooter
+
+			dataTable = append(dataTable, STable{
+				key.(string),
+				it["username"].(string),
+				it["password"].(string),
+				it["ip"].(string),
+				it["remark"].(string),
+			})
 		}
 	}
 
-	fmt.Println(str)
+	OutputLine(dataTable)
+
+	//fmt.Println(str)
 }
 
 func PrintlnSSH(v interface{}, key string) {
-	const sshTableHead string = `
------------------------------------------------------------------------------------------------
-|     KEY       |                     SSH                      |           Password           |
------------------------------------------------------------------------------------------------`
-
-	const sshTableLine string = `
-| %-14s| %-45s| %-29s|`
-
-	const sshTableFooter string = `
------------------------------------------------------------------------------------------------`
-
-	str := fmt.Sprintf(sshTableHead)
 	var item = v.(map[string]interface{})
-	str += fmt.Sprintf(sshTableLine, key, "ssh "+item["username"].(string)+"@"+item["ip"].(string), item["password"])
-	str += sshTableFooter
-	fmt.Println(str)
+	dataTable := make([]SSLTable, 0)
+	dataTable = append(dataTable, SSLTable{
+		key,
+		fmt.Sprintf("ssh %s@%s", item["username"].(string), item["ip"].(string)),
+		item["password"].(string),
+	})
+
+	Output(dataTable)
 }
