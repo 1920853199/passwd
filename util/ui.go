@@ -18,7 +18,7 @@ type SSLTable struct {
 	Password string
 }
 
-const versionString string = `%s%s
+const versionString string = `
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 |        ____                               __                                                                                                          |
 |       / __ \____ ____________      ______/ /                                                                                                          |
@@ -28,13 +28,13 @@ const versionString string = `%s%s
 |                                                                                                                                                       |
 |    %-147s|
 |                                                                                                                                                       |
-|    Token: %s%-140s%s%s|
+|    Token: %-140s|
 |                                                                                                                                                       |
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 `
 
 func Println(args []string) {
-	fmt.Println(fmt.Sprintf(versionString, "\x1b[35m", "\x1b[1m", args[0], "\x1b[32m", args[1], "\x1b[35m", "\x1b[1m"))
+	fmt.Println(fmt.Sprintf(versionString, args[0], args[1]))
 }
 
 func PrintlnData(v interface{}, key string) {
