@@ -1,13 +1,13 @@
 package opts
 
 import (
-	"github.com/spf13/cobra"
-		"encoding/json"
+	"encoding/json"
 	"fmt"
+
+	"github.com/spf13/cobra"
 
 	"github.com/1920853199/passwd/service"
 	"github.com/1920853199/passwd/util"
-
 )
 
 // Cmd
@@ -30,7 +30,7 @@ func RunSet(cmd *cobra.Command, args []string) {
 	}
 
 	if len(args) != 5 {
-		fmt.Printf("%s%s\n","\x1b[31m","Error: args error. example:passwd-cli set [key] [username] [password] [ip] [remark]")
+		fmt.Printf("%s%s\n", "\x1b[31m", "Error: args error. example:passwd-cli set [key] [username] [password] [ip] [remark]")
 		return
 	}
 
@@ -39,11 +39,11 @@ func RunSet(cmd *cobra.Command, args []string) {
 		Param: map[string]service.Args{
 			"set": {
 				Key: args[0],
-				Value:service.Item{
-					Username:args[1],
-					Password:args[2],
-					Ip:args[3],
-					Remark:args[4],
+				Value: service.Item{
+					Username: args[1],
+					Password: args[2],
+					Ip:       args[3],
+					Remark:   args[4],
 				},
 			},
 		},
@@ -58,8 +58,8 @@ func RunSet(cmd *cobra.Command, args []string) {
 	json.Unmarshal(data, &ret)
 
 	if ret.Code == 200 {
-		fmt.Printf("%s%s\n","\x1b[32m",ret.Msg)
-	}else{
-		fmt.Printf("%s%s\n","\x1b[31m",ret.Msg)
+		fmt.Printf("%s\n", ret.Msg)
+	} else {
+		fmt.Printf("%s\n", ret.Msg)
 	}
 }

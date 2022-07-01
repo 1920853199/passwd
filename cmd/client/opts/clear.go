@@ -45,8 +45,8 @@ func RunClear(cmd *cobra.Command, args []string) {
 	var ret service.Result
 	json.Unmarshal(data, &ret)
 	if ret.Code == 200 {
-		fmt.Printf("%s%s\n","\x1b[32m",ret.Msg)
-	}else{
-		fmt.Printf("%s%s\n","\x1b[31m",ret.Msg)
+		fmt.Printf("%s\n", ret.Msg)
+	} else {
+		fmt.Printf("%s\n", ret.Msg)
 	}
 }
